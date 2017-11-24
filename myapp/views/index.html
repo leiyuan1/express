@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>express表格</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+    <script src="/javascripts/jquery-3.2.1.js"></script>
+</head>
+<body>
+    <a class="btn btn-default" href="/add" role="button">添加</a>
+    <a class="btn btn-default" href="/addFile" role="button">上传文件</a>
+    <table class="table table-striped">
+       <tr>
+           <td>序号</td>
+           <td>姓名</td>
+           <td>性别</td>
+           <td>年龄</td>
+           <td>联系方式</td>
+           <td>操作</td>
+       </tr>
+    </table>
+ <script>
+        $(function () {
+            var page=0;
+            $.ajax({
+                url:"/ajax",
+                data:{pages:page},
+                type:"post",
+                success:function (e) {
+                    $(e).appendTo("tbody");
+                }
+            })
+            var flag=true;
+            $(window).scroll(function () {
+                if(!flag){
+                    return ;
+                }
+                console.log($(window).scrollTop()+$(window).height()>$("body").outerHeight()-50)
+                if($(window).scrollTop()+$(window).height()>$("body").outerHeight()-50){
+                    flag=false;
+                    page++;
+                    $.ajax({
+                        url:"/ajax",
+                        data:{pages:page},
+                        type:"post",
+                        success:function (e) {
+                            if(!$(".table:contains('没有更多数据')").length){
+                                flag=true;
+                                $(e).appendTo("tbody");
+                            }
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+</body>
+</html>

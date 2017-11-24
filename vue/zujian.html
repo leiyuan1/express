@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="node_modules/vue/dist/vue.js"></script>
+</head>
+<style>
+    .button{
+        width: 50px;
+        height:30px;
+        border:1px solid #4cae4c;
+        border-radius: 5px;
+        box-shadow: 0 0 8px #4cae4c;
+        text-align: center;
+        line-height: 30px;
+        padding: 5px 15px;
+    }
+</style>
+<body>
+      <div class="assembly">
+           <custom-button name="成功"></custom-button>
+      </div>
+      <script>
+          Vue.component("custom-button",{
+              props:["name"],
+              template:" <div class='button'>{{this.name}}</div>"
+          })
+          new Vue({
+              el:".assembly",
+          })
+
+      </script>
+</body>
+</html>

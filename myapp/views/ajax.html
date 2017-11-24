@@ -1,0 +1,13 @@
+<%for(var i=0;i< results.length;i++){%>
+<tr>
+    <td class="id"><%=results[i].sid%></td>
+    <td class="name"><%=results[i].sname%></td>
+    <td class="sex"><%=results[i].sexx%></td>
+    <td class="age"><%=results[i].ages%></td>
+    <td class="phone"><%=results[i].sphone%></td>
+    <td>
+        <a href="/edit/<%=results[i].sid%>">编辑</a>
+        <a href="/del/<%=results[i].sid%>">删除</a>
+    </td>
+</tr>
+<%}%>

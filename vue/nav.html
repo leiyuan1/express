@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="node_modules/vue/dist/vue.js"></script>
+</head>
+<style>
+    ul,li,div{
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    a{
+        text-decoration: none;
+    }
+    .aside{
+        width: 30%;
+        height:auto;
+        border-right:1px solid #dfdfdf;
+    }
+    .aside-son{
+        width: 100%;
+        height:auto;
+        margin-bottom: 15px;
+        padding-left: 20px;
+        box-sizing: border-box;
+    }
+    .aside-son h2{
+        width: 100%;
+        height:30px;
+        margin-bottom: 10px;
+        line-height: 30px;
+        font-size: 18px;
+        color:#333;
+        font-weight: 800;
+        cursor: pointer;
+    }
+    .aside-son>li{
+        width: 100%;
+        height:auto;
+    }
+    .aside-son>li>ul{
+        width: 100%;
+        height:auto;
+    }
+    .aside-son>li>ul>li{
+        width: 100%;
+        height:20px;
+        margin-bottom: 10px;
+        line-height: 20px;
+        font-size: 14px;
+        color:#2A332D;
+    }
+    .aside-son>li>ul>li{
+        width: 100%;
+        height:20px;
+        margin-bottom: 10px;
+        line-height: 20px;
+        font-size: 14px;
+    }
+    .li-son{
+        color:#2A332D;
+    }
+    .green{
+        color:#4cae4c;
+    }
+</style>
+<body>
+   <div class="aside">
+       <aside-son v-bind:con="con"></aside-son>
+   </div>
+   <script>
+       Vue.component("aside-son",{
+           props:["con"],
+           template:`
+                     <div>
+                           <ul class="aside-son" v-for="item in con">
+                           <h2 @click.stop="shirnk(item,item.flag)">{{item.title}}</h2>
+                           <li v-if="item.flag">
+                               <ul>
+                                  <li v-for="lis in item.arr">
+                                      <a href="javascript:;" class="li-son" @click="change(lis,lis.state)" v-bind:class="{green:lis.state==1}">
+                                           {{lis.con1}}
+                                      </a>
+                                  </li>
+                               </ul>
+                           </li>
+                           <li v-else></li>
+                       </ul>
+                     </div>
+                    `,
+           methods:{
+               shirnk(item,flag){
+                   console.log(flag)
+                   item.flag = !flag;
+               },
+               change(item,state){
+                   console.log(item)
+                   console.log(state)
+                     if(state==0){
+
+                         item.state=1;
+                     }else{
+                         item.state=0;
+                     }
+               }
+           }
+       })
+       new Vue({
+           el:".aside",
+           data:{
+               con: [{title:'全局配置',arr:[
+                   {con1:'silent',state:0},
+                   {con1:'optionMergeStrategies',state:0},
+                   {con1:'devtools',state:0},
+                   {con1:'errorHandler',state:0},
+                   {con1:'warnHandler',state:0},
+                   {con1:'ignoredElements',state:0}
+                   ],flag:false},
+                   {title:'全局 API',arr:[
+                       {con1:'silent',state:0},
+                       {con1:'optionMergeStrategies',state:0},
+                       {con1:'devtools',state:0},
+                       {con1:'errorHandler',state:0},
+                       {con1:'warnHandler',state:0},
+                       {con1:'ignoredElements',state:0}
+                   ],flag:false},
+                   {title:'选项 / 数据',arr:[
+                       {con1:'silent',state:0},
+                       {con1:'optionMergeStrategies',state:0},
+                       {con1:'devtools',state:0},
+                       {con1:'errorHandler',state:0},
+                       {con1:'warnHandler',state:0},
+                       {con1:'ignoredElements',state:0}
+                   ],flag:false}],
+
+           },
+       })
+   </script>
+</body>
+</html>

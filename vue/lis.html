@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="node_modules/vue/dist/vue.js"></script>
+</head>
+<style>
+    .big{
+        width: 500px;
+        height:auto;
+        margin: 30px auto;
+    }
+    .sousuo{
+        width: 100%;
+        height:30px;
+    }
+    .sousuo input{
+        width: 100%;
+        height:30px;
+        outline: none;
+        border:1px solid #3c763d;
+        padding-left: 5px;
+    }
+    .cat-btn{
+        width: 100%;
+        height:30px;
+        margin: 15px 0;
+        cursor: pointer;
+    }
+    .cat{
+        width: 100px;
+        height:100%;
+        float: right;
+        margin-left: 15px;
+    }
+    .show{
+        width: 100%;
+        height:auto;
+    }
+    .show-son{
+        width: 100%;
+        height:auto;
+        margin-bottom: 15px;
+        border:1px solid #dff0d8;
+        overflow: hidden;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    .biao{
+        width: 8px;
+        height:8px;
+        border-radius: 50%;
+        border:2px solid #4cae4c;
+        float: left;
+        margin-right: 15px;
+    }
+    .con{
+        width: calc(85% - 30px);
+        float: left;
+        height:auto;
+    }
+    .btn{
+        width:auto;
+        height:30px;
+        float: right;
+    }
+    .red{
+        background: red;
+    }
+</style>
+<body>
+     <div class="big" id="vue">
+         <div class="sousuo">
+             <input type="text" placeholder="请输入代办事项" v-model="text" @keydown.13="add">
+         </div>
+         <div class="cat-btn">
+             <span class="cat" @click="change('all')">全部</span>
+             <span class="cat" @click="change(0)">未完成</span>
+             <span class="cat" @click="change(1)">已完成</span>
+         </div>
+         <div class="show">
+            <div class="show-son" v-show="all.length>0" v-for="item in datas">
+                <div v-if="item.edit" @dblclick="edit(item,item.edit)">
+                    <div class="biao" @click="changestate(item,item.state)" v-bind:class={red:item.state==1}></div>
+                    <div class="con">{{ item.con }}</div>
+                </div>
+                <div v-else>
+                    <input type="text" v-model="item.con" @blur="edit(item,item.edit)" >
+                </div>
+                    <button class="btn" @click="del(item.id)">删除</button>
+             </div>
+
+             <div class="show-son" v-show="all.length==0">
+                 没有内容
+             </div>
+         </div>
+     </div>
+     <script>
+        new Vue({
+              el:"#vue",
+              data:{
+                  all: localStorage.todo?JSON.parse(localStorage.todo):[],
+                  text:"",
+                  status: "all"
+              },
+             methods: {
+                 add() {
+                     var obj = {};
+                     obj.id = 1000 * Math.random() + new Date().getTime();
+                     obj.con = this.text;
+                     obj.state = 0;
+                     obj.edit = true;
+                     this.all.push(obj);
+                     localStorage.todo = JSON.stringify(this.all);
+                     this.text = "";
+                 },
+                 changestate(item, state) {
+                     if (state == 1) {
+                         item.state = 0;
+                     } else {
+                         item.state = 1;
+                     }
+                     localStorage.todo = JSON.stringify(this.all);
+                 },
+                 del(id) {
+                     this.all = this.all.filter(function (e) {
+                         return e.id != id;
+                     })
+                     localStorage.todo = JSON.stringify(this.all);
+                 },
+                 edit(item, edit) {
+                     item.edit = !edit;
+                     localStorage.todo = JSON.stringify(this.all);
+                 },
+                 change(str) {
+                     this.status = str;
+                 },
+             },
+            computed: {
+                datas: function () {
+                    var that = this;
+                    return this.all.filter(function (obj) {
+                        if (that.status == "all") {
+                            return obj;
+                        } else {
+                            if (obj.state == that.status) {
+                                return obj;
+                            }
+                        }
+                    })
+                }
+            }
+         })
+     </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>添加内容</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+</head>
+<style>
+    form{
+        width: 500px;
+        height:auto;
+        margin: 20px auto;
+    }
+</style>
+<body>
+<form action="/editCon" method="post">
+    <div class="form-group has-success">
+        <label class="control-label" for="inputSuccess1">姓名:</label>
+        <input type="text" class="form-control" id="inputSuccess1" aria-describedby="helpBlock2" name="sname" value="<%=results[0].sname%>">
+    </div>
+    <div class="has-success">
+        <label class="control-label" for="inputSuccess1">性别:</label>
+        <label>
+            <input type="radio"  value="1" name="ssex" <%if (results[0].ssex==1){%> checked <%}%> >
+            男
+        </label>
+        <label>
+            <input type="radio" value="0" name="ssex" <%if (results[0].ssex==0){%> checked <%}%>>
+            女
+        </label>
+    </div>
+    <div class="form-group has-success">
+        <label class="control-label" for="inputSuccess1">年龄 :</label>
+        <input type="date" class="form-control"  aria-describedby="helpBlock2" name="sage" value="<%=results[0].sage%>">
+    </div>
+    <div class="form-group has-success">
+        <label class="control-label" for="inputSuccess1">电话:</label>
+        <input type="text" class="form-control"  aria-describedby="helpBlock2" name="sphone" value="<%=results[0].sphone%>">
+    </div>
+    <input type="hidden" name="sid" value="<%=results[0].sid%>">
+    <button type="submit" class="btn btn-success">提交</button>
+</form>
+</body>
+</html>
